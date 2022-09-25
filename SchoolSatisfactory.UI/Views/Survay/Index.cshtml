@@ -1,0 +1,305 @@
+﻿
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row col-lg-12 align-items-center">
+            <div class="mb-3 display-5">
+                <label class="form-label text-primary">البحث</label>
+                <hr />
+            </div>
+        </div>
+        <form>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlTerritory" class="form-label">المنطقة</label>
+                        <select id="ddlTerritory" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlClassification" class="form-label">تصنيف</label>
+                        <select id="ddlClassification" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlGender" class="form-label">الجنس</label>
+                        <select id="ddlGender" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlLevel" class="form-label">المستوى</label>
+                        <select id="ddlLevel" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlSchool" class="form-label">المدرسة</label>
+                        <select id="ddlSchool" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlRate" class="form-label">الجودة</label>
+                        <select id="ddlRate" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row align-items-center mb-3">
+            <div class="row">
+                <div class="col-lg-2">
+                    تاريخ من
+                    <input id="txtDateFrom" class="form-control" type="date" />
+                </div>
+                <div class="col-lg-2">
+                    تاريخ الى
+                    <input id="txtDateTo" class="form-control" type="date" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            @*<div class="row justify-content-center">
+
+                </div>*@
+            <div class="row justify-content-center">
+                <div class="table-responsive">
+                    <div class="form-check form-check-primary mb-3 d-flex">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" id="cbchartlegendtoggleBar" onclick="chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart');" />
+                            عرض البيانات
+                        </label>
+                    </div>
+                    <div class="col-lg-12" id="Divbarchart">
+                        <canvas id="myChart" style="height:400px; width:100%"></canvas>
+                    </div>
+                    <div class="form-check form-check-primary mb-3">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" id="cbchartlegendtoggle" onclick="chartlegendtogglebatch('cbchartlegendtoggle', 'Divpiechart', 'myChartPie');" />
+                            عرض البيانات
+                        </label>
+                    </div>
+                    <div class="col-lg-12" id="Divpiechart">
+                        <canvas id="myChartPie" style="height:400px; width:100%"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script src="chartjs/Chart.min.js"></script>
+<script src="chartjs/chartsapp.js"></script>
+<script src="chartjs/chartjs-plugin-deferred.js"></script>
+<script src="chartjs/chartjs-plugin-colorschemes.js"></script>
+<script src="chartjs/chartjs-plugin-datalabels.js"></script>
+<script>
+    function getCol(matrix, col){
+        var column = [];
+        for(var i=0; i < matrix.length; i++){
+            column.push(matrix[i][col]);
+        }
+        return column;
+    }
+    var chttitle = 'Area wise';
+
+
+
+               function makechartBatch(legenddisplay, datalabelsdisplay) {
+                   var ctx_BAR = document.getElementById("myChart").getContext("2d");
+                    var rate = $('#ddlRate').val();
+                    var terrId = $('#ddlTerritory').val();
+                   var classification = $('#ddlClassification').val();
+                   var gend = $('#ddlGender').val();
+                   var level = $('#ddlLevel').val();
+                   var school = $('#ddlSchool').val();
+                   var datefrom = $('#txtDateFrom').val();
+                   var dateto = $('#txtDateTo').val();
+                    $.post('/Survay/GetClientSchoolSurvay', {schoolNo:school,terrId:terrId, levelId:level,classId:classification, genderId:gend, rateId:rate,datefrom:datefrom,dateto:dateto}, function (data) {
+                    let labels = data.map(a => a.schoolNameAr);
+                       let labelData = data.map(a => a.id);
+                        chartsapp.initchtBAR(ctx_BAR, labels, labelData, chttitle, legenddisplay, datalabelsdisplay);
+                    })
+               } //function makechart ends
+
+               function makePieBatch(legenddisplay, datalabelsdisplay) {
+                   var ctx_Pie = document.getElementById('myChartPie').getContext("2d");
+                   var school = $('#ddlSchool').val();
+                   var datefrom = $('#txtDateFrom').val();
+                   var dateto = $('#txtDateTo').val();
+                   $.post('/Survay/GetSchoolRateStatistics', {schoolNo:school,datefrom:datefrom,dateto:dateto}, function (data) {
+                       let labels = data.map(a => a.rateNameAr);
+                       let labelData = data.map(a => a.satisfactoryRateId);
+                   chartsapp.initchtPIE(ctx_Pie, labels, labelData, legenddisplay, datalabelsdisplay);
+                });
+
+               }
+
+               function chartlegendtogglebatch(checkboxvalue, divValue, chtValue) {
+                   document.getElementById(divValue).innerHTML = '&nbsp;';
+                document.getElementById(divValue).innerHTML = `<canvas id=${chtValue} style="height:400px; width:100%"></canvas>`;
+                if (document.getElementById(checkboxvalue).checked) {
+                    //makechartBatch(true, true);
+                    makePieBatch(true, true);
+                } else {
+                    //makechartBatch(false, false);
+                    makePieBatch(false, false);
+                }
+            }
+
+            function chartlegendtogglebar(checkboxvalue, divValue, chtValue) {
+                   document.getElementById(divValue).innerHTML = '&nbsp;';
+                document.getElementById(divValue).innerHTML = `<canvas id=${chtValue} style="height:400px; width:100%"></canvas>`;
+                if (document.getElementById(checkboxvalue).checked) {
+                    makechartBatch(true, true);
+                    //makePieBatch(true, true);
+                } else {
+                    makechartBatch(false, false);
+                    //makePieBatch(false, false);
+                }
+            }
+
+                $(function () {
+
+                    $.getJSON('/Home/GetRateList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlRate").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetTerritoryList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlTerritory").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetClassificationList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlClassification").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetGenderList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlGender").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetLevelList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlLevel").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+
+                $("select#ddlTerritory").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolListWithQuestions',{schoolId:$('#ddlSchool').val(), terrId: itemVal,levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val(),rateId:$('#ddlRate').val()} , function (data) {
+
+                                    $.each(data.school, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                 chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart')
+                });
+                            });
+
+                         $("select#ddlClassification").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolListWithQuestions',{schoolId:$('#ddlSchool').val(), terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:itemVal,genderId:$('#ddlGender').val(),rateId:$('#ddlRate').val()} , function (data) {
+                     $.each(data.school, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                 chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart')
+                });
+
+                        });
+                        $("select#ddlGender").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolListWithQuestions',{schoolId:$('#ddlSchool').val(), terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:itemVal,rateId:$('#ddlRate').val()} , function (data) {
+                     $.each(data.school, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                 chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart')
+                });
+
+                        });
+                        $("select#ddlLevel").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolListWithQuestions',{schoolId:$('#ddlSchool').val(), terrId:$('#ddlTerritory').val(),levelId:itemVal,classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val(),rateId:$('#ddlRate').val()} , function (data) {
+                     $.each(data.school, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                 chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart')
+                });
+
+             });
+              $("select#ddlRate").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolListWithQuestions',{schoolId:$('#ddlSchool').val(), terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val(), rateId:itemVal} , function (data) {
+                                    chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart');
+
+                });
+
+             });
+
+              $("select#ddlSchool").change(function () {
+                            var itemVal = $(this).val();
+                                $.post('/Home/GetSchoolListWithQuestions',{schoolId:itemVal, terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val(),rateId:$('#ddlRate').val()} , function (data) {
+                     chartlegendtogglebatch('cbchartlegendtoggle', 'Divpiechart', 'myChartPie');
+                     chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart');
+                });
+                });
+
+
+                var dateFrom = $("#txtDateFrom");
+                var dateTo = $("#txtDateTo");
+                dateFrom.on("blur", function() {
+        if( dateFrom.val() !== "" ) {
+            chartlegendtogglebatch('cbchartlegendtoggle', 'Divpiechart', 'myChartPie');
+            chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart');
+        }
+    });
+     dateTo.on("blur", function() {
+        if( dateTo.val() !== "" ) {
+            chartlegendtogglebatch('cbchartlegendtoggle', 'Divpiechart', 'myChartPie');
+            chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart');
+        }
+    });
+
+                chartlegendtogglebatch('cbchartlegendtoggle', 'Divpiechart', 'myChartPie');
+            chartlegendtogglebar('cbchartlegendtoggleBar', 'Divbarchart', 'myChart');
+
+                })
+</script>
+}

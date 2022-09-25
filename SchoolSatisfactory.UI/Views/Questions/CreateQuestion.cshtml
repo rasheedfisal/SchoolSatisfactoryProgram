@@ -1,0 +1,403 @@
+﻿    @{
+        ViewData["Title"] = "اختيار المدرسة";
+    }
+
+
+
+<!-- About Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div id="select-rate" class="row mb-3">
+            <div class="row mb-3 display-5">
+                <label class="form-label text-primary">نوع الجودة</label>
+                <hr />
+            </div>
+            <div class="row col-lg-4 align-items-center">
+                <form>
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlRate" class="form-label">الجودة</label>
+                        <select id="ddlRate" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" onclick="gotoSchool()"><i class="fas fa-chevron-circle-right fa-lg"></i> التالي</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="select-school" class="row mb-3">
+            <div class="row col-lg-12 align-items-center">
+                <div class="mb-3 display-5">
+                    <label class="form-label text-primary">اختيار المدرسة</label>
+                    <hr />
+                </div>
+            </div>
+            <div class="row col-lg-4 align-items-center">
+                <form>
+
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlTerritory" class="form-label">المنطقة</label>
+                        <select id="ddlTerritory" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlClassification" class="form-label">تصنيف</label>
+                        <select id="ddlClassification" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlGender" class="form-label">الجنس</label>
+                        <select id="ddlGender" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlLevel" class="form-label">المستوى</label>
+                        <select id="ddlLevel" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                        <label for="ddlSchool" class="form-label">المدرسة</label>
+                        <select id="ddlSchool" class="form-select">
+                            <option value="0">[اختيار]</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="gotoQuestion()"><i class="fas fa-chevron-circle-right fa-lg"></i> التالي</button>
+                    <button type="button" class="btn btn-secondary" onclick="gobacktoRate()">السابق <i class="fas fa-chevron-circle-left fa-lg"></i></button>
+                </form>
+            </div>
+        </div>
+        <div id="select-question">
+            <div class="row col-lg-12 align-items-center">
+                <div class="mb-3 display-5">
+                    <label class="form-label text-primary">اختيار السؤال</label>
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <form>
+                            <div class="form-group mb-3 animate__animated animate__lightSpeedInRight">
+                                <label class="control-label">ما هو السؤال؟</label>
+                                <input class="form-control" id="txt-question" required />
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" onclick="gotoAnswers()"><i class="fas fa-chevron-circle-right fa-lg"></i> التالي</button>
+                                <button type="button" class="btn btn-secondary" onclick="gobacktoSchool()">السابق <i class="fas fa-chevron-circle-left fa-lg"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="select-answer" class="row mb-3">
+            <div class="row col-lg-12 align-items-center">
+                <div class="mb-3 display-5">
+                    <label class="form-label text-primary">اختيار الجواب</label>
+                    <hr />
+                </div>
+            </div>
+            <div>
+                <form>
+                    <div class="row col-lg-4 mb-3">
+                        <div class="form-group animate__animated animate__lightSpeedInRight">
+                            <label class="control-label text-bold">اكتب جوابك</label>
+                            <input class="form-control" id="txt-answer" required />
+                        </div>
+                    </div>
+                    <div class="row col-lg-4 mb-3">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="addAnswerToList()">اضافة</button>
+                        </div>
+                    </div>
+                    <div class="row col-lg-4">
+                        <div class="table-responsive py-5">
+                            <table class="table table-hover" style="table-layout: fixed; word-wrap:break-word" id="tblanswer">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="90%">
+                                            الجواب
+                                        </th>
+                                        <th width="10%">
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row col-lg-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="gotoConfirmation()"><i class="fas fa-chevron-circle-right fa-lg"></i> التالي</button>
+                            <button type="button" class="btn btn-secondary" onclick="gobacktoQuestion()">السابق <i class="fas fa-chevron-circle-left fa-lg"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div id="confirm-question">
+            <div class="row col-lg-12 align-items-center">
+                <div class="mb-3 display-5">
+                    <label class="form-label text-primary">هل انت متأكد من  هذه البيانات؟</label>
+                    <hr />
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" onclick="PostQuestion($('#ddlRate').val(), $('#ddlSchool').val(), $('#txt-question').val(), table_to_array(), localStorage.qId)">تأكيد</button>
+                                <button type="button" class="btn btn-secondary" onclick="gobacktoAnswers()">السابق <i class="fas fa-chevron-circle-left fa-lg"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+<script>
+                function gotoSchool(){
+                    if($('#ddlRate').val() === "0"){
+                        Toast.fire({
+                    type: 'info',
+                    title: 'الرجاء اختيار نوع الجودة!'
+                })
+                    }else{
+                     $('#select-rate').slideUp(500);
+                     $('#select-school').show("fast")
+                        $('html, body').animate({
+                    scrollTop: $("#select-school").parent().parent().offset().top
+                }, 0);
+                    }
+                }
+                function gobacktoRate(){
+                     $('#select-school').slideDown(1000).hide();
+                     $('#select-rate').show("fast");
+                }
+                function gotoQuestion(){
+                    if($('#ddlSchool').val() === "0"){
+                        Toast.fire({
+                    type: 'info',
+                    title: 'الرجاء اختيار المدرسة!'
+                })
+                    }else{
+                    $('#select-school').slideUp(500);
+                     $('#select-question').show("fast")
+                     $('html, body').animate({
+                        scrollTop: $("#select-question").parent().parent().offset().top
+                }, 0);
+                    }
+
+                }
+                function gobacktoSchool(){
+                     $('#select-question').slideDown(1000).hide();
+                     $('#select-school').show("fast");
+                }
+                function gotoAnswers(){
+                    if($('#txt-question').val() === ""){
+                        Toast.fire({
+                    type: 'info',
+                    title: 'الرجاءاضافة السؤال!'
+                })
+                    }else{
+                    $('#select-question').slideUp(500);
+                     $('#select-answer').show("fast");
+                     $('html, body').animate({
+                         scrollTop: $("#select-answer").parent().parent().offset().top
+                }, 0);
+                    }
+
+                }
+                function gobacktoQuestion(){
+                     $('#select-answer').slideDown(1000).hide();
+                     $('#select-question').show("fast");
+                }
+                function gotoConfirmation(){
+
+                    if ($('#tblanswer tbody').children().length == 0) {
+             Toast.fire({
+                    type: 'info',
+                    title: 'الرجاءاضافة على الاقل جواب واحد!'
+                })
+        }else{
+            $('#select-answer').slideUp(500);
+                     $('#confirm-question').show("fast")
+            $('html, body').animate({
+            scrollTop: $("#select-question").parent().parent().offset().top
+                }, 0);
+        }
+
+                }
+                function gobacktoAnswers(){
+                     $('#confirm-question').slideDown(1000).hide();
+                     $('#select-answer').show("fast");
+                }
+                function addAnswerToList(){
+                    var answer = $('#txt-answer').val();
+                    if(answer === ""){
+                        Toast.fire({
+                    type: 'info',
+                    title: 'الرجاءاضافة الجواب!'
+                })
+                    }else{
+                        $('#txt-answer').val("");
+                     $('#tblanswer > tbody:last-child').append(`<tr>
+            <td width="90%">${answer}</td>
+            <td width="10%" class="text-center"><a style="cursor:pointer"><i class="fa fa-trash text-danger"></i></a></td>
+            </tr >`);
+
+                    }
+                }
+
+                function table_to_array() {
+                        
+var data = $('table#tblanswer tbody tr').map(function(index) {
+    var cols = $(this).find('td');
+    return {
+        id: index + 1,
+        AnswerNameAr: cols[0].innerHTML,            // use innerHTML
+        AnswerNameEn: "",           // for future use
+        //age: (cols[1].innerHTML + '') * 1,  // parse int
+       // grade: (cols[2].innerHTML + '') * 1 // parse int
+    };
+}).get();
+return data;
+                }
+
+
+            $(function () {
+
+                $('#select-school').hide();
+                $('#select-question').hide();
+                $('#select-answer').hide();
+                $('#confirm-question').hide();
+
+
+                $.getJSON('/Home/GetRateList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlRate").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetTerritoryList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlTerritory").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetClassificationList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlClassification").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetGenderList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlGender").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                $.getJSON('/Home/GetLevelList', function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlLevel").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                if(localStorage.schoolId !== null && localStorage.qId !== null){
+                     $.post('/Questions/GetSelectedQuestion', {qId: localStorage.qId} , function (data) {
+                    $.each(data, function (i, e) {
+                      $("#ddlRate").val(e.satisfactoryRateId)  
+                      $("#txt-question").val(e.questionNameAr);
+                      $('#tblanswer > tbody:last-child').append(`<tr>
+            <td width="90%">${e.answerNameAr}</td>
+            <td width="10%" class="text-center"><a style="cursor:pointer"><i class="fa fa-trash text-danger"></i></a></td>
+            </tr >`);
+                 });
+                });
+                    
+                    $.post('/Home/GetAllSchoolList', {schoolId: localStorage.schoolId} , function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+               
+                }
+
+                $("select#ddlTerritory").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolList',{terrId: itemVal,levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val()} , function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+                            });
+
+                         $("select#ddlClassification").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolList',{terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:itemVal,genderId:$('#ddlGender').val()} , function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+
+                        });
+                        $("select#ddlGender").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolList',{terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:itemVal} , function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+
+                        });
+                        $("select#ddlLevel").change(function () {
+                            var itemVal = $(this).val();
+                            $("select#ddlSchool").empty();
+                             $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                                $.post('/Home/GetSchoolList',{terrId:$('#ddlTerritory').val(),levelId:itemVal,classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val()} , function (data) {
+                     $.each(data, function (i, e) {
+                        var selected = e.selected ? "selected" : "";
+                        $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+                 });
+                });
+
+                        });
+
+                                $('body').on('click', 'i.fa.fa-trash', function(e) {
+
+                e.preventDefault();
+
+                var row = $(this).closest('tr');
+                var row_td = row.children();
+                row.addClass("bg-danger");
+
+                row_td.slideUp("slow").hide("fast", function(){
+
+                    row.remove();
+
+                });
+
+            });
+            })
+</script>
+
+}

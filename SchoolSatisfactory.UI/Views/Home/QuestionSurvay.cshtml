@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "الدراسة الاستقصائية";
+}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <h4 class="fw-bold text-center mt-3"></h4>
+            <div id="survay-success" style="display:none">
+                <div class="col-lg-12">
+                    <p class="mb-4">شكرا لك على اكمال الاجراء لقد تم ارسال الاستطلاع الى الجهات المختصة. </p>
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="@Url.Action("Index", "Home")">الذهاب الى الصفحة الرئيسية</a>
+                </div>
+            </div>
+            <div id="survay">
+                <form id="questionForm" class="bg-white px-4">
+                </form>
+            </div>
+            <div id="Others" class="display-6" style="display:none">
+                <div class="col-lg-12">
+                    <form method="post" onsubmit="return PostSurvay(this)">
+                        <label for="comment">امور اخرى تحب ذكرها</label>
+<textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+<button type="submit" class="btn btn-primary">اضافة الاستطلاع</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script src="~/js/question.js" charset="utf-8"></script>
+}

@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "اختيار المدرسة";
+}
+
+
+
+<!-- About Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row col-lg-4 align-items-center">
+            <form>
+                <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight">
+                    <label for="ddlTerritory" class="form-label">المنطقة</label>
+                    <select id="ddlTerritory" class="form-select">
+                        <option value="0">[اختيار]</option>
+                    </select>
+                </div>
+                <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight animate__delay-1s">
+                    <label for="ddlClassification" class="form-label">تصنيف</label>
+                    <select id="ddlClassification" class="form-select">
+                        <option value="0">[اختيار]</option>
+                    </select>
+                </div>
+                <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight animate__delay-2s">
+                    <label for="ddlGender" class="form-label">الجنس</label>
+                    <select id="ddlGender" class="form-select">
+                        <option value="0">[اختيار]</option>
+                    </select>
+                </div>
+                <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight animate__delay-3s">
+                    <label for="ddlLevel" class="form-label">المستوى</label>
+                    <select id="ddlLevel" class="form-select">
+                        <option value="0">[اختيار]</option>
+                    </select>
+                </div>
+                <div class="mb-3 display-6 animate__animated animate__lightSpeedInRight animate__delay-4s">
+                    <label for="ddlSchool" class="form-label">المدرسة</label>
+                    <select id="ddlSchool" class="form-select">
+                        <option value="0">[اختيار]</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="GetNextStep(document.getElementById('ddlSchool').value)"><i class="fas fa-chevron-circle-right fa-lg"></i> التالي</button>
+                <a href="@Url.Action("ClientInfo", "Home")" class="btn btn-secondary">السابق <i class="fas fa-chevron-circle-left fa-lg"></i></a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+<script>
+    $(function () {
+        $.getJSON('/Home/GetTerritoryList', function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlTerritory").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+        $.getJSON('/Home/GetClassificationList', function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlClassification").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+        $.getJSON('/Home/GetGenderList', function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlGender").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+        $.getJSON('/Home/GetLevelList', function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlLevel").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+
+        $("select#ddlTerritory").change(function () {
+                    var itemVal = $(this).val();
+                    $("select#ddlSchool").empty();
+                     $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                        $.post('/Home/GetSchoolList',{terrId: itemVal,levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val()} , function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+                    });
+
+                 $("select#ddlClassification").change(function () {
+                    var itemVal = $(this).val();
+                    $("select#ddlSchool").empty();
+                     $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                        $.post('/Home/GetSchoolList',{terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:itemVal,genderId:$('#ddlGender').val()} , function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+
+                });
+                $("select#ddlGender").change(function () {
+                    var itemVal = $(this).val();
+                    $("select#ddlSchool").empty();
+                     $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                        $.post('/Home/GetSchoolList',{terrId:$('#ddlTerritory').val(),levelId:$('#ddlLevel').val(),classId:$('#ddlClassification').val(),genderId:itemVal} , function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+
+                });
+                $("select#ddlLevel").change(function () {
+                    var itemVal = $(this).val();
+                    $("select#ddlSchool").empty();
+                     $("select#ddlSchool").append(`<option value="0">[اختيار]</option>`);
+                        $.post('/Home/GetSchoolList',{terrId:$('#ddlTerritory').val(),levelId:itemVal,classId:$('#ddlClassification').val(),genderId:$('#ddlGender').val()} , function (data) {
+             $.each(data, function (i, e) {
+                var selected = e.selected ? "selected" : "";
+                $("select#ddlSchool").append(`<option value="${e.value}" ${selected}>${e.text}</option>`);
+         });
+        });
+
+                });
+    })
+</script>
+}

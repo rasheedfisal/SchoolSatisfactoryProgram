@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="~/img/carousel-1.jpg" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(0, 0, 0, .2);">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-10 col-lg-8">
+                            <h1 class="display-2 text-white animated slideInDown mb-4">لبيئة افضل لطفلك</h1>
+                            <p class="fs-5 fw-medium text-white mb-4 pb-2">يساعدنا هذا الاستطلاع في تحسين التعامل والجودة</p>
+                            @*<a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Learn More</a>
+                                <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Our Classes</a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="~/img/carousel-2.jpg" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(0, 0, 0, .2);">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-10 col-lg-8">
+                            <h1 class="display-2 text-white animated slideInDown mb-4">اصنع مستقبلاً أكثر إشراقًا لطفلك</h1>
+                            <p class="fs-5 fw-medium text-white mb-4 pb-2">لمساعدتنا في خلق بيئة فعالة لزياة انتاجية التعلم</p>
+                            @*  <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Learn More</a>
+                                <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Our Classes</a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+<!-- Facilities Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="mb-3">نوع الجودة</h1>
+            <p>الرجاء المشاركة في الاستطلاع لتحسين الخدمة</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 wow fadeInUp transition-swipe" style="cursor:pointer" onclick="GotoSchool(1)" data-wow-delay="0.1s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-success">
+                        <span class="bg-success"></span>
+                        <i class="fas fa-grin-beam fa-3x text-success"></i>
+                        <span class="bg-success"></span>
+                    </div>
+                    <div class="facility-text bg-success">
+                        <h3 class="text-success mb-3">ممتازة</h3>
+                        <p class="mb-0">هل كانت الخدمة ممتازة</p>
+                        <h6 class="display-6 text-success animated slideInDown mb-0"><small>اضغط للاستمرار</small></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" style="cursor:pointer" onclick="GotoSchool(2)" data-wow-delay="0.3s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-primary">
+                        <span class="bg-primary"></span>
+                        <i class="far fa-grin-alt fa-3x text-primary"></i>
+                        <span class="bg-primary"></span>
+                    </div>
+                    <div class="facility-text bg-primary">
+                        <h3 class="text-primary mb-3">جيدة جدا</h3>
+                        <p class="mb-0">هل كانت الخدمة جيدة جدا</p>
+                         <h6 class="display-6 text-primary animated slideInDown mb-0"><small>اضغط للاستمرار</small></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" style="cursor:pointer" onclick="GotoSchool(3)" data-wow-delay="0.5s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-warning">
+                        <span class="bg-warning"></span>
+                        <i class="far fa-meh fa-3x text-warning"></i>
+                        <span class="bg-warning"></span>
+                    </div>
+                    <div class="facility-text bg-warning">
+                        <h3 class="text-warning mb-3">جيدة</h3>
+                        <p class="mb-0">هل كانت الخدمة جيدة</p>
+                         <h6 class="display-6 text-warning animated slideInDown mb-0"><small>اضغط للاستمرار</small></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" style="cursor:pointer" onclick="GotoSchool(4)" data-wow-delay="0.7s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-danger">
+                        <span class="bg-danger"></span>
+                        <i class="fas fa-angry fa-3x text-danger"></i>
+                        <span class="bg-danger"></span>
+                    </div>
+                    <div class="facility-text bg-danger">
+                        <h3 class="text-danger mb-3">رديئة</h3>
+                        <p class="mb-0">هل كانت الخدمة رديئة</p>
+                         <h6 class="display-6 text-danger animated slideInDown mb-0"><small>اضغط للاستمرار</small></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Facilities End -->

@@ -1,0 +1,46 @@
+﻿@model List<SchoolSatisfactory.UI.Models.NavigationMenuViewModel>
+@{
+    ViewData["Title"] = "NavigationMenu";
+}
+<a class="nav-item nav-link active" asp-area="" asp-controller="Home" asp-action="Index">الرئيسية</a>
+<a class="nav-item nav-link" asp-area="" asp-controller="Home" asp-action="About">عن الموقع</a>
+@*Menu Items from the database*@
+@foreach (var item in Model)
+{
+    if (item.ParentMenuId == null) //Level one items will have null parent id
+    {
+        if (!string.IsNullOrWhiteSpace(item.ControllerName))
+        {
+            <a class="nav-item nav-link" asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName">@item.Name</a>
+        }
+        if (item.IsExternal && !string.IsNullOrWhiteSpace(item.ExternalUrl))
+        {
+            <a target="_blank" class="nav-item nav-link" href="@item.ExternalUrl">@item.Name</a>
+        }
+        var children = Model.Where(x => x.ParentMenuId == item.Id && x.Visible).OrderBy(x => x.DisplayOrder).ToList();
+        if (children != null)
+        {
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@item.Name</a>
+                <div class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
+                    @foreach (var itm in children)
+                    {
+                        if (itm.IsExternal && !string.IsNullOrWhiteSpace(itm.ExternalUrl))
+                        {
+                            <a target="_blank" class="dropdown-item" href="@itm.ExternalUrl">@itm.Name</a>
+                        }
+                        else if (!string.IsNullOrEmpty(itm.ControllerName) && !string.IsNullOrEmpty(itm.ActionName))
+                        {
+                            <a class="dropdown-item" asp-area="@item.Area" asp-controller="@itm.ControllerName" asp-action="@itm.ActionName">@itm.Name</a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-area="@itm.Area" asp-page="@itm.PageName">@itm.Name</a>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    }
+}
+
